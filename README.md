@@ -1,4 +1,4 @@
-### Board2 설정
+### Board3 설정
 
 1. jdk 25
 2. oracle 21c express

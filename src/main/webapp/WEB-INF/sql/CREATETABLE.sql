@@ -51,6 +51,19 @@ select * from menus;
 
 
 
+----------------------------------------------------------
+-- 회원 정보
+CREATE TABLE TUSER (
+      USERID   VARCHAR2(12)   PRIMARY KEY
+    , PASSWD   VARCHAR2(12)   NOT NULL
+    , USERNAME VARCHAR2(100)  NOT NULL
+    , EMAIL    VARCHAR2(320)
+    , UPOINT   NUMBER(9)      DEFAULT 0
+    , REGDATE  DATE           DEFAULT  SYSDATE
+
+);
+
+
 
 
 
