@@ -1,4 +1,5 @@
-D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
@@ -62,5 +63,11 @@ D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp<%@ page l
     </form>
   
   </main>
+	<script>
+	const fromEl = document.quertySelector();
+	formEl.addEventListener('Click', function(e) {
+		
+	});
+	</script>
 </body>
 </html>    

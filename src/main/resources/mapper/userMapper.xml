@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-window -> preferences -> 검색: xml
-	-> xml(Wild Web Developer) -> 오른쪽 탭에서 
-	체크 download ML resource -> apply 버튼 클릭
+
+<mapper namespace="com.green.user.mapper.UserMapper">
 	
-	 namespace="com.green.menus.mapper.MenuMapper" : interface 위치
-
-
- -->
-
-
-
-
-<mapper namespace="com.green.user.mapper.MenuMapper">
+	<!-- 사용자 추가 -->
+	<insert  id = "insertUser">
 	
-	<!-- 메뉴 목록조회 -->
-	<select id="getMenuList"
-	        resultType="com.green.menus.dto.MenuDTO">
-			
-	SELECT     MENU_ID, MENU_NAME, MENU_SEQ
-	 FROM      MENUS
-	 ORDER BY  MENU_SEQ ASC
-	 	
-	</select>
-	
-	<!-- 메뉴 한개 조회 -->
-	<select id="getMenu">
-	SELECT     MENU_ID, MENU_NAME, MENU_SEQ
-	 FROM      MENUS
-	 WHERE     MENU_ID = ${ menu_id }
-	 
-	</select>
-	
-	<!-- 메뉴 한개 추가 -->
-	<insert id="insertMenu">
-	INSERT INTO MENUS ( MENU_ID, MENU_NAME, MENU_SEQ )
-		VALUES (#{menu_id}, #{menu_name}, #{menu_seq}) 
+    INSERT INTO TUSER (
+	    USERID,
+	    PASSWD,
+	    USERNAME,
+	    EMAIL,
+	    UPOINT,
+	    REGDATE
+	) VALUES (
+	    #{ userid   },
+	    #{ passwd   },
+	    #{ username },
+	    #{ email    },
+	    1000         ,
+	    sysdate	
+	)
 	
 	</insert>
 	
+	<!-- 사용자 목록 -->
+	<select id="getUserList">
 	
-	<!-- 메뉴 삭제 -->
-	<delete id="deleteMenu">
-	DELETE FROM MENUS 
-	WHERE = #{menu_id};
+	SELECT
+	    USERID,
+	    USERNAME,
+	    EMAIL,
+	    UPOINT,
+	    TO_CHAR( REGDATE, 'YYYY-MM-DD') REGDATE
+	FROM
+	    TUSER
+	ORDER  BY  USERID ASC
 	
-	</delete>
 	
-	<!-- 메뉴 수정 -->
-	<insert id="updateMenu">
+	</select>
 	
-	UPDATE MENUS
-	SET	   MENU_NAME = #{ menu_name },
-		   MENU_SEQ	 = #{ menu_seq }
-	WHERE  MENU_ID 	 = #{ menu_id }
+  	<!-- 사용자 조회 -->
+	<select id="getUser">
 	
-	</insert>
+	SELECT
+	    USERID,
+	    PASSWD,
+	    USERNAME,
+	    EMAIL,
+	    UPOINT,
+	    TO_CHAR( REGDATE, 'YYYY-MM-DD HH24:MI:SS') REGDATE
+	FROM
+	    TUSER
+	WHERE
+		USERID = #{ userid }
+
+	</select>
 	
-	 <insert id="insertMenu2">
-   INSERT INTO MENUS (
-       MENU_ID,
-       MENU_NAME,
-       MENU_SEQ
-   ) VALUES ( 
-       (SELECT 'MENU' 
-          || TRIM(TO_CHAR( NVL( MAX( SUBSTR(MENU_ID,5,2) ), 0)) +1, '00' 
-       FROM MENUS),
-       :#{menu_name},
-       (SELECT NVL( MAX(MENU_SEQ) + 1 )FROM MENUS )
-   );
-   </insert>
-  
+  	<!-- 사용자 삭제 -->
+  	<delete id="deleteUser">
+  	
+  	DELETE FROM TUSER
+  	WHERE USERID = #{userid}
+  	</delete>
+  	
+
+	<!-- 사용자 수정 -->
+	<update id="updateUser">
+	
+	UPDATE TUSER
+	SET		PASSWD = #{ passwd },
+			USERNAME = #{ username },
+			EMAIL	 = #{ email}
+	WHERE USERID = #{ userid }
+	
+	</update>
 </mapper>

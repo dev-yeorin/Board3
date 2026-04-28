@@ -1,4 +1,5 @@
-D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
@@ -35,6 +36,7 @@ D:\dev\springboot\Board2\src\main\webapp\WEB-INF\views\menus\write.jsp<%@ page l
 </style>
 <body> 
      <main>
+     
       <h2>메뉴 등록</h2>
       <form action="/Menus/Write2" method="get">
         <table>
