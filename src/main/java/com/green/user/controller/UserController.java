@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.green.user.dto.UserDto;
@@ -103,4 +105,21 @@ public class UserController {
 
 		return mv;
 	}
+	
+	
+	// 아이디 중복확인 - 결과 문자열을 리턴
+	// 사용 가능한 아이디
+	@GetMapping("/IdDupcheck2")
+	@ResponseBody					// return 퇴는 글자는 jsp가 아님
+	public UserDto idDupcheck2(UserDto userDto) {
+		
+		
+		UserDto user = userMapper.getIdDupCheck(userDto);  // 조회한 userid
+		
+		if(user == null)
+			user = new UserDto();
+
+		return user;
+	}
+	
 }

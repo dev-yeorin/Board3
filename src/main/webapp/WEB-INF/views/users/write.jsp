@@ -32,16 +32,20 @@
   input[type=submit], input[type=button] {
      width : 100px;
   }
-  
+    #userid {
+     width : 81%;
+  }
 </style>
 <body> 
   <main>
-    <h2>사용자 등록( ${msg} })</h2>
+    <h2>사용자 등록( ${msg} )</h2>
     <form  action="/Users/Write" method="post">
      <table>
       <tr>
         <td><span class="red">*</span>사용자 아이디</td>
-        <td><input type="text" name="userid"   /></td>
+        <td><input type="text"   id="userid"    name="userid"   />
+        	<input type="button" id="dupCheck1" value="중복확인(새창)" />
+        	<input type="button" id="dupCheck2" value="중복확인(Ajax)" /></td>
       </tr>
       <tr>
         <td><span class="red">*</span>비밀번호</td>
@@ -91,6 +95,13 @@
     		return;
     	}
     	
+    	// 아이디 중복여부 값 체크
+    	if( !idDupChecked ) {
+    		alert('아이디 중복확인을 하세요')
+    		e.preventDefault()  // 이벤트 취소
+    		e.stopPropagation() // 이벤트 버블링 방지
+    	}
+    	
     	//  비밀번호값 체크
     	if( passwdEl.value.trim()  == ''  ) {
     		alert('암호를 입력하세요')
@@ -128,6 +139,53 @@
     	}
     	
     } );
+  
+  </script>
+  
+  <script>
+  	// 아이디 중복확인 (새창열기)
+  	const btnDup1El = document.querySelector('#dupCheck1')
+  	btnDup1El.addEventListener('click', function() {
+  		// alert('ok1')
+  		// 새창을 띄운다
+  		let url = '';
+  		let target = '';
+  		let feature = 'left=800,top=500,width=200,height=200]'
+  		window.open(url, target, feature)
+  		
+  	})
+  	
+  </script>
+  <script>
+  	// 아이디 중복확인2 (Ajax)
+  	const btnDup2El = document.querySelector('#dupCheck2')
+  	btnDup2El.addEventListener('click', function() {
+	    if( useridEl.value.trim() == '' ) {
+	    	alert('아이디를 입력하세용')
+	    	useridEl.focus()
+	    	return ;
+	    }
+	 // alert('ok2')
+  
+  		 let  url = '/Users/IdDupCheck2?userid=' + useridEl.value;
+    	fetch( url )
+    	  .then( response => response.json() )
+    	  .then( data => {
+    		  console.log( data )    
+    		  if(data.userid != null) {
+    			  alert('사용불가능')
+    			  idDupChecked = false;
+    		  } else	{  
+    			  alert('사용가능')
+    			  idDupChecked = true;
+    		  }
+  			})
+  	})
+  	
+  	// userid 의 value가 바뀌면 idDupChecked = false; 
+  	useridEl.addEventListener('change', function() {
+  		idDupChecked = false; 
+  	})
   
   </script>
 </body>
