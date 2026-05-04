@@ -122,4 +122,31 @@ public class UserController {
 		return user;
 	}
 	
+	// /Users/DupCheckWindow
+	@GetMapping("/DupCheckWindow")
+	public ModelAndView dupCheckWindow() {
+		
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("users/idcheck");
+		mv.addObject("userid", "aaa");
+		return mv;
+	}
+	
+	// 중복확인
+	// /Users/DupCheckuserid
+	@RequestMapping("DupCheck")
+	public ModelAndView dupCheck(UserDto userDto) {
+		
+		UserDto user    = userMapper.getUser( userDto );
+		String  msg     = "<b class='red> 사용할 수 없는 아이디입니다</b>";
+		if(user == null)
+				msg		= "<b class='red> 사용 가능한 아이디입니다</b>";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("users/idcheck");
+		mv.addObject("msg", msg);
+
+		
+		return mv;
+	}
 }
