@@ -78,12 +78,16 @@
   </main>
   <!-- java script : client validation -->
   	 <script>
+  	var    idDupChecked = false;
+  	
+  	
     const  formEl      =  document.querySelector('form');
     const  useridEl    =  document.querySelector('[name="userid"]');
     const  passwdEl    =  document.querySelector('#passwd');
     const  passwd2El   =  document.querySelector('#passwd2');
     const  usernameEl  =  document.querySelector('[name="username"]');
     
+    // 입력 항목 체크
     formEl.addEventListener('submit', function( e ) {
     	
     	//  아이디값 체크
@@ -148,9 +152,9 @@
   	btnDup1El.addEventListener('click', function() {
   		// alert('ok1')
   		// 새창을 띄운다
-  		let url = '/DupCheckWindow';
+  		let url = '/Users/DupCheckWindow';
   		let target = 'dupcheck'; // 새 창 이름 있으면 한 개만 열림
-  		let feature = 'left=800,top=500,width=200,height=200]'
+  		let feature = 'left=800,top=200,width=200,height=200]'
   		window.open(url, target, feature)
   		
   	})

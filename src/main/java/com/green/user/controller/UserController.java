@@ -107,46 +107,44 @@ public class UserController {
 	}
 	
 	
-	// 아이디 중복확인 - 결과 문자열을 리턴
-	// 사용 가능한 아이디
-	@GetMapping("/IdDupcheck2")
-	@ResponseBody					// return 퇴는 글자는 jsp가 아님
-	public UserDto idDupcheck2(UserDto userDto) {
+	// 아이디 중복확인 - 결과문자열을 리턴 : 
+		// <b class="green">사용가능한 아이디입니다</b>
+		// <b class="red">사용가능할 수 없는 아이디입니다</b>
+		// /Users/IdDupCheck2?userid=aaa
+		@GetMapping("/IdDupCheck2")
+		@ResponseBody     // return 되는 글자는 jsp가 아니다
+		public  UserDto  idCupCheck2( UserDto userDto ) {
+			
+			UserDto  user    = userMapper.getIdDupCheck(userDto);   
+			if(user == null)
+				user = new UserDto();
+		    return   user;
+			
+		}
 		
+		// /Users/DupCheckWindow
+		@GetMapping("/DupCheckWindow")
+		public  ModelAndView   dupCheckWindow( ) {	
+			
+			ModelAndView  mv  =  new ModelAndView();
+			mv.setViewName("users/idcheck");				
+			return mv;
+			
+		}
 		
-		UserDto user = userMapper.getIdDupCheck(userDto);  // 조회한 userid
-		
-		if(user == null)
-			user = new UserDto();
-
-		return user;
-	}
-	
-	// /Users/DupCheckWindow
-	@GetMapping("/DupCheckWindow")
-	public ModelAndView dupCheckWindow() {
-		
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("users/idcheck");
-		mv.addObject("userid", "aaa");
-		return mv;
-	}
-	
-	// 중복확인
-	// /Users/DupCheckuserid
-	@RequestMapping("DupCheck")
-	public ModelAndView dupCheck(UserDto userDto) {
-		
-		UserDto user    = userMapper.getUser( userDto );
-		String  msg     = "<b class='red> 사용할 수 없는 아이디입니다</b>";
-		if(user == null)
-				msg		= "<b class='red> 사용 가능한 아이디입니다</b>";
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("users/idcheck");
-		mv.addObject("msg", msg);
-
-		
-		return mv;
-	}
+		// 중복확인 
+		// /Users/DupCheck?userid=aaa
+		@RequestMapping("/DupCheck")
+		public  ModelAndView   dupCheck( UserDto  userDto ) {
+					
+			UserDto        user    =  userMapper.getUser( userDto );
+			String         msg     =  "<b class='red'>사용할 수 없는 아이디 입니다</b>";
+			if( user == null )
+				msg  = "<b class='green'>사용 가능한 아이디 입니다</b>";
+			
+			ModelAndView   mv    =  new ModelAndView();
+			mv.setViewName("users/idcheck");
+			mv.addObject("msg",    msg);		
+			return  mv;
+		}
 }
